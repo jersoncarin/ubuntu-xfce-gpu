@@ -26,7 +26,7 @@ echo "unset LD_PRELOAD=$CORRECT_PRELOAD" >> "$BASHRC"
 [ -r "$HOME/.Xresources" ] && xrdb "$HOME/.Xresources"
 
 if [ -n "$USE_DISPLAY" ]; then
-    exec vglrun -d "$USE_DISPLAY" dbus-launch --exit-with-session startxfce4
+    exec vglrun -q 80 -d "$USE_DISPLAY" dbus-launch --exit-with-session startxfce4
 else
-    exec vglrun dbus-launch --exit-with-session startxfce4
+    exec vglrun -q 80 dbus-launch --exit-with-session startxfce4
 fi
