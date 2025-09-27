@@ -1,0 +1,32 @@
+#!/bin/bash
+
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+unset LD_PRELOAD
+
+# goodies
+export XKL_XMODMAP_DISABLE=1
+export XDG_RUNTIME_DIR="/tmp/runtime-cuda"
+export VK_ICD_FILENAMES="/etc/vulkan/icd.d/nvidia_icd.json"
+
+# desktop configuration
+export XDG_SESSION_TYPE=x11
+export XDG_CURRENT_DESKTOP=XFCE
+export DESKTOP_SESSION=xfce
+export XAUTHORITY="$HOME/.Xauthority"  # fixed path
+
+# display things
+export DISPLAY=":12"
+export USE_DISPLAY=""
+
+BASHRC="$HOME/.bashrc"
+echo "unset LD_PRELOAD=$CORRECT_PRELOAD" >> "$BASHRC"
+
+[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
+[ -r "$HOME/.Xresources" ] && xrdb "$HOME/.Xresources"
+
+if [ -n "$USE_DISPLAY" ]; then
+    exec vglrun -d "$USE_DISPLAY" dbus-launch --exit-with-session startxfce4
+else
+    exec vglrun dbus-launch --exit-with-session startxfce4
+fi
