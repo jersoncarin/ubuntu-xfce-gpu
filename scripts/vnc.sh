@@ -25,6 +25,14 @@ echo "unset LD_PRELOAD=$CORRECT_PRELOAD" >> "$BASHRC"
 [ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
 [ -r "$HOME/.Xresources" ] && xrdb "$HOME/.Xresources"
 
+xfconf-query -c xfce4-session -p /general/LockCommand -s ""
+xfconf-query -c xfce4-session -p /general/LogoutCommand -s ""
+xfconf-query -c xfce4-session -p /general/LockScreen -s false
+
+xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/blank-on-ac -s 0
+xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/blank-on-battery -s 0
+xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/lock-on-suspend -s false
+
 if [ -n "$USE_DISPLAY" ]; then
     exec vglrun -q 80 -d "$USE_DISPLAY" dbus-launch --exit-with-session startxfce4
 else
