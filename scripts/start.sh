@@ -47,7 +47,7 @@ setup_user_and_group() {
     local username=$1
     local password=$2
     local sudo_flag=$3
-    local cloudflared_token=$4
+    local token=$4
     local homedir="/home/${username}"
     
     # Create group and user
@@ -85,6 +85,15 @@ setup_user_and_group() {
     mount -o remount,rw /etc/resolv.conf || echo "Could not remount /etc/resolv.conf"
     # Set DNS
     echo -e "nameserver 8.8.8.8\nnameserver 8.8.4.4" > /etc/resolv.conf
+    
+    # enable tailscale
+    systemctl start tailscaled
+    
+    # give space sometime but i don't know if this thing
+    sleep 2
+    
+    # Authenticate and bring up Tailscale interface
+    tailscale up --authkey="${token}"
 }
 
 echo Entrypoint script is Running...

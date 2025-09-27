@@ -95,6 +95,21 @@ RUN mkdir -p /etc/apt/keyrings \
     && apt-get install -y --no-install-recommends firefox \
     && rm -rf /var/lib/apt/lists/*
 
+# Install dependencies and Tailscale automatically
+RUN apt-get update && \
+    apt-get install -y curl gnupg2 && \
+    curl -fsSL https://tailscale.com/install.sh | sh && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install vscode
+RUN apt-get update && \
+    apt-get install -y wget apt-transport-https && \
+    wget -O vscode.deb "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64" && \
+    apt install -y ./vscode.deb && \
+    rm vscode.deb && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 # Cleanup
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
