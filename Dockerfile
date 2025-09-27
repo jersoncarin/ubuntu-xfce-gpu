@@ -40,6 +40,7 @@ RUN apt-get install -y \
     software-properties-common \
     apt-transport-https \
     neofetch
+    
 
 # Install TurboVNC
 RUN wget https://github.com/TurboVNC/turbovnc/releases/download/3.2/turbovnc_3.2_amd64.deb \
@@ -54,6 +55,9 @@ RUN wget https://github.com/VirtualGL/virtualgl/releases/download/3.1.3/virtualg
     && apt-get install -y ./virtualgl_3.1.3_amd64.deb \
     && rm -f virtualgl_3.1.3_amd64.deb \
     && rm -rf /var/cache/apt /var/lib/apt/lists/*
+
+# Python setup
+RUN apt-get update && apt-get install -y python3-pip python-is-python3 python3.12-venv
 
 # Create SSH folder for SSH Service
 RUN mkdir /var/run/sshd
