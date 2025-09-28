@@ -20,7 +20,7 @@ export DISPLAY=":12"
 export USE_DISPLAY=""
 
 BASHRC="$HOME/.bashrc"
-echo "unset LD_PRELOAD=$CORRECT_PRELOAD" >> "$BASHRC"
+echo "unset LD_PRELOAD" >> "$BASHRC"
 
 [ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
 [ -r "$HOME/.Xresources" ] && xrdb "$HOME/.Xresources"
